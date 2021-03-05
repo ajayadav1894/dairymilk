@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+
+<title>Customer List</title>
+</head>
+
+<body>
+<br>
+<br>
+<br>
+<div class="container">
+<h3><b>Customer List</b></h3>
+<hr>
+<table class="table table-bordered table-striped table-hover">
+<thead class="table-dark"><tr>
+<td scope="col">Id</td>
+<td scope="col">Name</td>
+<td scope="col">Email</td>
+<td scope="col">Pin</td>
+</tr>
+</thead>
+<tbody>
+<tr th:each="customer : ${customer}">
+<td scope="row" th:text="${customer.mobile_number}" />
+<td scope="row" th:text="${customer.first_name}" />
+<td scope="row" th:text="${customer.email}" />
+<td scope="row" th:text="${customer.six_digit_pin}" />
+</tr>
+</tbody>
+
+</table>
+</div>
+
+</body>
+
+
+</html>
