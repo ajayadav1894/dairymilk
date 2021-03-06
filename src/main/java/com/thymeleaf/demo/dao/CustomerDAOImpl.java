@@ -70,13 +70,20 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	@Transactional
-	public void update(Customer theCustomer) {
+	public void updateCustomer(Customer theCustomer) {
 
 		// get the current session
 		Session session = entityManager.unwrap(Session.class);
 
 		// update the session object
-		session.update(theCustomer);
+		Query theQuery = session.createQuery(
+				"update Customer set first_name = :name , email = :email, six_digit_pin = :pin where mobile_number = :mobile_number");
+		theQuery.setParameter("name", theCustomer.getFirst_name());
+		theQuery.setParameter("email", theCustomer.getEmail());
+		theQuery.setParameter("pin", theCustomer.getSix_digit_pin());
+		theQuery.setParameter("mobile_number", theCustomer.getMobile_number());
+
+		theQuery.executeUpdate();
 
 	}
 
@@ -92,6 +99,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 		// pass the input parameter to the query
 		theQuery.setParameter("mobile_number", mobile_number);
+
+		// execute the query
+		theQuery.executeUpdate();
 
 	}
 

@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.thymeleaf.demo.entity.Customer;
 import com.thymeleaf.demo.service.CustomerServices;
@@ -36,29 +37,37 @@ public class CustomerRestController {
 		return "customer/list-customer";
 	}
 
-	// get customer by ID
-	@GetMapping("/customer/{mobile_number}")
-	public Customer getCustomerByID(@PathVariable String mobile_number) {
-		Customer theCustomer = customerServices.findByID(mobile_number);
+	@GetMapping("/showaddform")
+	public String showAddCustForm(Model theModel) {
+		Customer customer = new Customer();
+		theModel.addAttribute("customer", customer);
+		return "customer/showAddCustForm";
+	}
 
-		if (theCustomer == null) {
-			throw new RuntimeException("Customer id not found - " + mobile_number);
-		}
-
-		return theCustomer;
+	@GetMapping("/showformforupdate")
+	public String showFormforUpdate(@RequestParam("customerId") String customerId, Model theModel) {
+		Customer customer = customerServices.findByID(customerId);
+		theModel.addAttribute("customer", customer);
+		return "customer/updatecustomer";
 	}
 
 	// add a new customer
-	@PostMapping("/customer")
-	public void save(@RequestBody Customer theCustomer) {
-		// checking whether the customer exists or not
-		Customer customerExists = customerServices.findByID(theCustomer.getMobile_number());
+	@PostMapping("/addcustomer")
+	public String save(@ModelAttribute("customer") Customer theCustomer) {
+		customerServices.save(theCustomer);
+		return "redirect:/dairymilk/customers";
+	}
 
-		if (customerExists == null) {
-			customerServices.save(theCustomer);
-		} else {
-			throw new RuntimeException("Customer with customer id - " + theCustomer + " already exists");
-		}
+	@PostMapping("/updatecustomer")
+	public String updatecustomer(@ModelAttribute("customer") Customer theCustomer) {
+		customerServices.updateCustomer(theCustomer);
+		return "redirect:/dairymilk/customers";
+	}
+
+	@GetMapping("/deletecustomer")
+	public String deleteCustomer(@RequestParam("customerId") String theCustomer) {
+		customerServices.deleteByID(theCustomer);
+		return "redirect:/dairymilk/customers";
 	}
 
 	// add a new customer
@@ -74,10 +83,10 @@ public class CustomerRestController {
 		}
 	}
 
-	@PostMapping("/addcustomer")
-	public String addCustomer(@RequestBody Customer theCustomer) {
-		return customerServices.addCustomer(theCustomer);
-	}
+	/*
+	 * @PostMapping("/addcustomer") public String addCustomer(@RequestBody Customer
+	 * theCustomer) { return customerServices.addCustomer(theCustomer); }
+	 */
 
 	@GetMapping("/test")
 	public String testFun() {

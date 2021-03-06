@@ -14,7 +14,7 @@ public interface CustomerDAO {
 
 	public void deleteByID(String mobile_number);
 
-	public void update(Customer theCustomer);
+	public void updateCustomer(Customer theCustomer);
 
 	public String addCustomer(Customer theCustomer);
 

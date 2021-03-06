@@ -45,14 +45,13 @@ public class CustomerServicesImpl implements CustomerServices {
 	public void deleteByID(String mobile_number) {
 
 		customerDAO.deleteByID(mobile_number);
-
 	}
 
 	@Override
 	@Transactional
-	public void update(Customer theCustomer) {
+	public void updateCustomer(Customer theCustomer) {
 
-		customerDAO.update(theCustomer);
+		customerDAO.updateCustomer(theCustomer);
 
 	}
 

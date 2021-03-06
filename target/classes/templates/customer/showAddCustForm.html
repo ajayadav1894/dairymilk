@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+
+<title>Customer Registration</title>
+</head>
+
+<body>
+
+
+<div class="container">
+<br>
+<br>
+
+<h3><b>Add New Customer</b></h3>
+<hr>
+
+<form action="#" th:action="@{/dairymilk/addcustomer}" th:object="${customer}" method="POST">
+
+<input type="text" th:field="*{first_name}" class="form-control mb-4 col-4" placeholder="First Name">
+<input type="text" th:field="*{last_name}" class="form-control mb-4 col-4" placeholder="Last Name">
+<input type="text" th:field="*{email}" class="form-control mb-4 col-4" placeholder="Email">
+<input type="text" th:field="*{mobile_number}" class="form-control mb-4 col-4" placeholder="Mobile Number">
+<input type="password" th:field="*{six_digit_pin}" class="form-control mb-4 col-4" placeholder="six digit pin">
+
+<button type="submit" class="btn btn-info col-3">Save</button>
+
+</form>
+
+
+</div>
+
+
+</body>
+
+</html>
